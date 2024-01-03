@@ -1,5 +1,5 @@
-name: Khulnasoft
-description: Use the Github Action to run jobs on Staging Environments automatically deployed by Khulnasoft.
+ame: Integrate Khulnasoft
+description: Securely auth into Khulnasoft-generated environments so you can test before merge.
 inputs:
   api-token:
     description: Khulnasoft API token used to fetch necessary environment variables from Khulnasoft.
@@ -19,7 +19,7 @@ runs:
       with:
         python-version: '3.x'
     - name: Install Dependencies
-      run: pip install -r $GITHUB_ACTION_PATH/../src/requirements.txt > /dev/null
+      run: pip install -r $GITHUB_ACTION_PATH/src/requirements.txt > /dev/null
       shell: bash
       # Pass inputs via shell until https://github.com/actions/runner/issues/665 resolved
     - name: Pass Inputs to Shell
@@ -28,8 +28,8 @@ runs:
           echo "INPUT_TIMEOUT_MINUTES=${{ inputs.timeout-minutes }}" >> $GITHUB_ENV
           echo "INPUT_APP_NAME=${{ inputs.app-name }}" >> $GITHUB_ENV
       shell: bash
-    - name: Fetch the Khulnasoft environment variables
-      run: python $GITHUB_ACTION_PATH/../src/fetch_khulnasoft_env.py 
+    - name: Authenticate into Khulnasoft
+      run: python $GITHUB_ACTION_PATH/src/fetch_khulnasoft_env.py 
       shell: bash
 branding:
   icon: git-pull-request
